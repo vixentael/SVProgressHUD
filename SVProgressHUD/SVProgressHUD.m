@@ -17,7 +17,6 @@ CGFloat SVProgressHUDRingThickness = 6;
 
 @interface SVProgressHUD ()
 
-@property (nonatomic, readwrite) SVProgressHUDMaskType maskType;
 @property (nonatomic, strong, readonly) NSTimer *fadeOutTimer;
 
 @property (nonatomic, strong, readonly) UIButton *overlayView;
@@ -126,6 +125,15 @@ CGFloat SVProgressHUDRingThickness = 6;
     [[SVProgressHUD sharedView] showImage:image status:string duration:displayInterval];
 }
 
+
++ (void)showWithoutImageWithStatus:(NSString *)status maskType:(SVProgressHUDMaskType)maskType {
+    [[SVProgressHUD sharedView] showImage:nil status:status maskType:maskType];
+}
+
+
++ (void)showWithoutImageWithStatus:(NSString *)status delay:(NSTimeInterval)delay {
+    [[SVProgressHUD sharedView] showImage:nil status:status duration:delay];
+}
 
 #pragma mark - Dismiss Methods
 
@@ -485,6 +493,22 @@ CGFloat SVProgressHUDRingThickness = 6;
     self.fadeOutTimer = [NSTimer timerWithTimeInterval:duration target:self selector:@selector(dismiss) userInfo:nil repeats:NO];
     [[NSRunLoop mainRunLoop] addTimer:self.fadeOutTimer forMode:NSRunLoopCommonModes];
 }
+
+- (void)showImage:(UIImage *)image status:(NSString *)string maskType:(SVProgressHUDMaskType)hudMaskType {
+    self.progress = -1;
+    
+    [self cancelRingLayerAnimation];
+    
+    if(![SVProgressHUD isVisible])
+        [SVProgressHUD showProgress:self.progress status:string maskType:hudMaskType];
+    
+    self.imageView.image = image;
+    self.imageView.hidden = NO;
+    self.stringLabel.text = string;
+    [self updatePosition];
+    [self.spinnerView stopAnimating];
+}
+
 
 - (void)dismiss {
     self.activityCount = 0;

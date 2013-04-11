@@ -19,7 +19,7 @@
 #pragma mark Show Methods Sample
 
 - (void)show {
-	[SVProgressHUD show];
+	[SVProgressHUD showWithoutImageWithStatus:@"lallal" maskType:SVProgressHUDMaskTypeGradient];
 }
 
 - (void)showWithStatus {

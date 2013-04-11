@@ -30,6 +30,8 @@ typedef NSUInteger SVProgressHUDMaskType;
 @property (readwrite, nonatomic, retain) UIFont *hudFont NS_AVAILABLE_IOS(5_0) UI_APPEARANCE_SELECTOR;
 #endif
 
+@property (nonatomic, readwrite) SVProgressHUDMaskType maskType;
+
 + (void)show;
 + (void)showWithMaskType:(SVProgressHUDMaskType)maskType;
 + (void)showWithStatus:(NSString*)status;
@@ -51,6 +53,13 @@ typedef NSUInteger SVProgressHUDMaskType;
 
 + (BOOL)isVisible;
 
+
++ (SVProgressHUD*)sharedView;
+
 - (NSTimeInterval)displayDurationForString:(NSString*)string;
+
++ (void)showWithoutImageWithStatus:(NSString *)status maskType:(SVProgressHUDMaskType)maskType;
+
++ (void)showWithoutImageWithStatus:(NSString *)status delay:(NSTimeInterval)delay;
 
 @end
