@@ -2,7 +2,9 @@
 
 SVProgressHUD is a clean and easy-to-use HUD meant to display the progress of an ongoing task.
 
-![SVProgressHUD](http://f.cl.ly/items/3r2x0b1E1O2F0V422a3R/screenshots2.png)
+![SVProgressHUD-iOS7](http://f.cl.ly/items/1U0T1W0q0u2Z213k1n0o/SVProgressHUD.png)
+
+![SVProgressHUD-iOS6](http://f.cl.ly/items/3r2x0b1E1O2F0V422a3R/screenshots2.png)
 
 ## Installation
 
@@ -78,6 +80,18 @@ Or show a confirmation glyph before before getting dismissed 1 second later usin
 + (void)showErrorWithStatus:(NSString *)string;
 + (void)showImage:(UIImage*)image status:(NSString*)string; // use 28x28 white pngs
 ```
+
+### Observing HUD Notifications
+
+`SVProgressHUD` posts four notifications via `NSNotificationCenter` in response to being shown/dismissed:
+* `SVProgressHUDWillAppearNotification` when the show animation starts
+* `SVProgressHUDDidAppearNotification` when the show animation completes
+* `SVProgressHUDWillDisappearNotification` when the dismiss animation starts
+* `SVProgressHUDDidDisappearNotification` when the dismiss animation completes
+
+Each notification passes a `userInfo` dictionary holding the HUD's status string (if any), retrievable via `SVProgressHUDStatusUserInfoKey`.
+
+`SVProgressHUD` also posts `SVProgressHUDDidReceiveTouchEventNotification` when users touch on the screen. For this notification `userInfo` is not passed but the object parameter contains the `UIEvent` that related to the touch.
 
 ## Credits
 

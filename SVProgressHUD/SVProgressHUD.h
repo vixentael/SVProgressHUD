@@ -11,6 +11,12 @@
 #import <AvailabilityMacros.h>
 
 extern NSString * const SVProgressHUDDidReceiveTouchEventNotification;
+extern NSString * const SVProgressHUDWillDisappearNotification;
+extern NSString * const SVProgressHUDDidDisappearNotification;
+extern NSString * const SVProgressHUDWillAppearNotification;
+extern NSString * const SVProgressHUDDidAppearNotification;
+
+extern NSString * const SVProgressHUDStatusUserInfoKey;
 
 enum {
     SVProgressHUDMaskTypeNone = 1, // allow user interactions while HUD is displayed
@@ -23,12 +29,15 @@ typedef NSUInteger SVProgressHUDMaskType;
 
 @interface SVProgressHUD : UIView
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 50000
-@property (readwrite, nonatomic, retain) UIColor *hudBackgroundColor NS_AVAILABLE_IOS(5_0) UI_APPEARANCE_SELECTOR;
-@property (readwrite, nonatomic, retain) UIColor *hudForegroundColor NS_AVAILABLE_IOS(5_0) UI_APPEARANCE_SELECTOR;
-@property (readwrite, nonatomic, retain) UIColor *hudStatusShadowColor NS_AVAILABLE_IOS(5_0) UI_APPEARANCE_SELECTOR;
-@property (readwrite, nonatomic, retain) UIFont *hudFont NS_AVAILABLE_IOS(5_0) UI_APPEARANCE_SELECTOR;
-#endif
++ (SVProgressHUD*)sharedView;
+
+@property (nonatomic, strong) UIFont *statusFont;
+@property (nonatomic, strong) UIImage *successImage;
+@property (nonatomic, strong) UIImage *errorImage;
+@property (nonatomic, strong) UIColor *backgroundColor;
+
++ (void)setOffsetFromCenter:(UIOffset)offset;
++ (void)resetOffsetFromCenter;
 
 @property (nonatomic, readwrite) SVProgressHUDMaskType maskType;
 
@@ -37,9 +46,9 @@ typedef NSUInteger SVProgressHUDMaskType;
 + (void)showWithStatus:(NSString*)status;
 + (void)showWithStatus:(NSString*)status maskType:(SVProgressHUDMaskType)maskType;
 
-+ (void)showProgress:(CGFloat)progress;
-+ (void)showProgress:(CGFloat)progress status:(NSString*)status;
-+ (void)showProgress:(CGFloat)progress status:(NSString*)status maskType:(SVProgressHUDMaskType)maskType;
++ (void)showProgress:(float)progress;
++ (void)showProgress:(float)progress status:(NSString*)status;
++ (void)showProgress:(float)progress status:(NSString*)status maskType:(SVProgressHUDMaskType)maskType;
 
 + (void)setStatus:(NSString*)string; // change the HUD loading status while it's showing
 
